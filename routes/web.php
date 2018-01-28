@@ -24,10 +24,13 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/changeavatar',function(){
         return view('profile.pic');
     });
-    Route::get('/friends','ProfileController@findFriends')->name('friends');
+    Route::get('/findfriends','ProfileController@findFriends')->name('friends');
     Route::post('/uploadavatar','ProfileController@uploadAvatar')->name('uploadavatar');
     Route::get('/editprofile','ProfileController@edit')->name('editprofile');
     Route::post('/updateprofile','ProfileController@update')->name('updateprofile');
     Route::get('/addfriend/{id}','ProfileController@sendRequest');
-    Route::get('/request','ProfileController@request');
+    Route::get('/requests','ProfileController@requests');
+    Route::get('/accept/{name}/{id}','ProfileController@accept');
+    Route::get('/removerequest/{id}','ProfileController@removeRequest');
+    Route::get('/friends','ProfileController@friends');
 });

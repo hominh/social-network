@@ -12,6 +12,38 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .msg_main{
+            background-color:#ffff;
+            border-left:5px solid #F5F8FA;
+            position: absolute;
+            left: calc(25%);
+        }
+        .msg_right{
+            background-color:#ffff;
+            border-left:5px solid #F5F8FA;
+            min-height:600px;
+            position:fixed;
+            right:0px
+        }
+        .msgDiv{
+            position:fixed; left:0
+        }
+        .left-sidebar li { padding:10px;
+            border-bottom:1px solid #ddd;
+            list-style:none; margin-left:-20px}
+        .msgDiv li:hover{
+            cursor:pointer;
+        }
+        .jobDiv{border:1px solid #ddd; margin:10px; width:30%; float:left; padding:10px; color:#000}
+        .caption li {list-style:none !important; padding:5px}
+        .jobDiv .company_pic{width:50px; height:50px; margin:5px}
+        .jobDetails h4{border:1px solid green; width:60%;
+        padding:5px; margin:0 auto; text-align:center; color:green}
+        .jobDetails .job_company{padding-bottom:10px; border-bottom:1px solid #ddd; margin-top:20px}
+        .jobDetails .job_point{color:green; font-weight:bold}
+        .jobDetails .email_link{padding:5px; border:1px solid green; color:green}
+    </style>
 </head>
 <body>
     <div id="app">
@@ -36,40 +68,45 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li>
-                            @if (Auth::user())
-                                <a href="{{ url('/profile') }}/{{ Auth::user()->slug }}">Profile</a>
-                            @endif
-                        </li>
+                        @if (Auth::check())
+                            <li><a href="{{ url('/profile') }}/{{ Auth::user()->slug }}">Profile</a></li>
+                            <li><a href="{{ url('/findfriends') }}">Find friends</a></li>
+                            <li><a href="{{ url('/requests') }}">My request <span style="color:green; font-weight:bold;
+                                       font-size:16px">({{App\Friendship::where('status', 0)
+                                                  ->where('user_requested', Auth::user()->id)
+                                                  ->count()}})</a></li>
+                            <li><a href="{{ url('/friends') }}">Friends</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <span class="badge" style="background:red;">5</span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="width:320px">
+                                    <div>here i will show my messages list with images users</div>
+                                </ul>
+                            </li>
+                            <li><a href="{{ url('/friends') }}"><i class="fa fa-users" aria-hidden="true"></i>Friends</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <img src="{{url('image')}}/{{ Auth::user()->avatar }}" width="30px" height="30px" class="img-rounded"/> <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('editprofile') }}">Edit profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
+                                    <li><a href="{{ route('editprofile') }}">Edit profile</a></li>
+                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif
@@ -77,7 +114,6 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
 
