@@ -208,4 +208,15 @@ class ProfileController extends Controller
         return view('profile.friends', compact('friends'));
     }
 
+    public function notifications($id) {
+        $user_id = Auth::user()->id;
+        $notes = DB::table('notifications')
+                ->leftJoin('users','users.id','=','notifications.user_logged')
+                ->where('notifications.id','=',$id)
+                ->where('notifications.user_hero','=',$user_id)
+                ->orderBy('notifications.created_at', 'desc')
+                ->get();
+        return view('profile.notifications',compact('notes'));
+    }
+
 }

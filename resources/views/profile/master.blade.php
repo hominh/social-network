@@ -87,10 +87,14 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <span class="badge" style="background:red;">5</span>
+                                    <span class="badge" style="background:red;">{{ $countnotifications }}</span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="width:320px">
-                                    <div>here i will show my messages list with images users</div>
+                                    @foreach($notes as $item)
+                                        <li>
+                                            <a href="{{url('/notifications')}}/{{$item->id}}"><b style="color: green">{{ $item->name }} </b> {{ $item->note }}</a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li><a href="{{ url('/friends') }}"><i class="fa fa-users" aria-hidden="true"></i>Friends</a></li>

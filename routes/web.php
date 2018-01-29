@@ -33,4 +33,5 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/accept/{name}/{id}','ProfileController@accept');
     Route::get('/removerequest/{id}','ProfileController@removeRequest');
     Route::get('/friends','ProfileController@friends');
+    Route::get('/notifications/{id}','ProfileController@notifications');
 });
