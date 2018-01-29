@@ -18,8 +18,13 @@ class ProfileController extends Controller
      */
     public function index($slug)
     {
-        $data = Auth::user()->profile;
-        return view('profile.index')->with('data', $data);
+        $datas = DB::table('users')
+             ->leftJoin('profiles', 'profiles.user_id','users.id')
+             ->where('slug', $slug)
+             ->get();
+        //dd($data);
+        //return view('profile.index', compact('data'));
+        return view('profile.index',compact('datas'))->with('data', Auth::user()->profile);
     }
 
     public function uploadAvatar(Request $request) {
@@ -216,6 +221,7 @@ class ProfileController extends Controller
                 ->where('notifications.user_hero','=',$user_id)
                 ->orderBy('notifications.created_at', 'desc')
                 ->get();
+        //dd($notes);
         return view('profile.notifications',compact('notes'));
     }
 

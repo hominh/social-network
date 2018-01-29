@@ -7,36 +7,40 @@
         <li class="breadcrumb-item active" aria-current="page"><a href="{{Auth::user()->slug}}">Profile</a></li>
     </ol>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        @include('profile.sidebar')
+        @foreach($datas as $item)
+        <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{Auth::user()->name}}
+                    {{$item->name}}
                 </div>
 
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <img src="{{url('image')}}/{{Auth::user()->avatar}}" width="80px" height="80px" class="img-circle" />
-                                <a href="{{url('/')}}/changeavatar">Change avatar</a>
+                                <h3 align="center">{{$item->name}}</h3>
+                                <img src="{{url('image')}}/{{$item->avatar}}" width="120px" height="120px" class="img-circle" />
+                                <!--<a href="{{url('/')}}/changeavatar">Change avatar</a>!-->
                                 <div class="caption">
-                                    <h3>{{ucwords(Auth::user()->name)}}</h3>
-                                    <p>
-                                        {{$data->country}} - {{$data->city}}
+                                    <h3>{{ucwords($item->name)}}</h3>
+                                    <p align="center">
+                                            {{$item->country}} - {{$item->city}}
                                     </p>
-                                    <a href="{{url('/editprofile')}}" class="btn btn-primary" role="button">Edit profile</a>
+                                    <p align="center"><a href="{{url('/editprofile')}}" class="btn btn-primary" role="button">Edit profile</a></p>
 
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
-                            <h4>About</h4>
-                            <p>{{$data->about}}</p>
+                            <h4 class=""><span class="label label-default">About</span></h4>
+                            <p>{{$item->about}}</p>
                         </div>
 
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
