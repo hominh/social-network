@@ -90,19 +90,30 @@
                                     <span class="badge" style="background:red;">{{ $countnotifications }}</span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" style="width:320px">
-                                    @foreach($notes as $item)
-                                        <li>
+                                    @foreach($notes as $note)
+                                        <a href="{{url('/notifications')}}/{{$note->id}}">
+                                        @if($note->status==1)
+                                            <li style="background:#E4E9F2; padding:10px">
+                                        @else
+                                            <li style="padding:10px">
+                                            @endif
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <img src="{{url('image')}}/{{$item->avatar}}" style="width:50px; padding:5px; background:#fff; border:1px solid #eee" class="img-rounded" />
+                                                    <img src="{{url('image')}}/{{$item->avatar}}" style="width:50px; padding:5px; background:#fff; border:1px solid #eee" class="img-rounded">
                                                 </div>
+
                                                 <div class="col-md-10">
-                                                        <a href="{{url('/notifications')}}/{{$item->id}}"><b style="color: green">{{ $item->name }} </b> {{ $item->note }}</a>
+                                                    <b style="color:green; font-size:90%">{{ucwords($note->name)}}</b>
+                                                    <span style="color:#000; font-size:90%">{{$note->note}}</span>
+                                                    <br/>
+                                                    <small style="color:#90949C"> <i aria-hidden="true" class="fa fa-users"></i>
+                                            {{date('F j, Y', strtotime($note->created_at))}}
+                                          at {{date('H: i', strtotime($note->created_at))}}</small>
                                                 </div>
+
                                             </div>
-
-
-                                        </li>
+                                            </li>
+                                        </a>
                                     @endforeach
                                 </ul>
                             </li>
