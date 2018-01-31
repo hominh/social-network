@@ -225,4 +225,18 @@ class ProfileController extends Controller
         return view('profile.notifications',compact('notes'));
     }
 
+    public function unfriend($id) {
+        $user_id = Auth::user()->id;
+        DB::table('friendships')
+            ->where('requester',$user_id)
+            ->where('user_requested',$id)
+            ->delete();
+        DB::table('friendships')
+            ->where('user_requested',$user_id)
+            ->where('requester',$id)
+            ->delete();
+        return back()->with('msg', 'You are not friend with this person');
+
+    }
+
 }

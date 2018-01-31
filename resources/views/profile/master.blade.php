@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -92,7 +92,16 @@
                                 <ul class="dropdown-menu" role="menu" style="width:320px">
                                     @foreach($notes as $item)
                                         <li>
-                                            <a href="{{url('/notifications')}}/{{$item->id}}"><b style="color: green">{{ $item->name }} </b> {{ $item->note }}</a>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <img src="{{url('image')}}/{{$item->avatar}}" style="width:50px; padding:5px; background:#fff; border:1px solid #eee" class="img-rounded" />
+                                                </div>
+                                                <div class="col-md-10">
+                                                        <a href="{{url('/notifications')}}/{{$item->id}}"><b style="color: green">{{ $item->name }} </b> {{ $item->note }}</a>
+                                                </div>
+                                            </div>
+
+
                                         </li>
                                     @endforeach
                                 </ul>

@@ -7,7 +7,6 @@
         </ol>
         <div class="row">
             @include('profile.sidebar')
-
             <div class="col-md-9">
                 <div class="col-sm-12 col-md-12">
                     @if ( session()->has('msg') )
@@ -21,7 +20,7 @@
                                 <img src="{{url('image')}}/{{$item->avatar}}" width="80px" height="80px" class="img-rounded"/>
                             </div>
                             <div class="col-md-7 pull-left">
-                                <h3 style="margin:0px;"><a href="">{{ucwords($item->name)}}</a></h3>
+                                <h3 style="margin:0px;"><a href="{{url('/profile')}}/{{$item->slug}}">{{ucwords($item->name)}}</a></h3>
                                 <p><b>Gender:</b> {{$item->gender}}</p>
                                 <p><b>Email:</b> {{$item->email}}</p>
                             </div>

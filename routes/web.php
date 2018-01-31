@@ -12,7 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
 });
 
 Auth::routes();
@@ -34,4 +33,6 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/removerequest/{id}','ProfileController@removeRequest');
     Route::get('/friends','ProfileController@friends');
     Route::get('/notifications/{id}','ProfileController@notifications');
+    Route::get('/unfriend/{id}','ProfileController@unfriend');
 });
+Route::get('/posts','PostController@index');

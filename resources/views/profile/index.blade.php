@@ -14,7 +14,6 @@
                 <div class="panel-heading">
                     {{$item->name}}
                 </div>
-
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6 col-md-4">
@@ -23,11 +22,13 @@
                                 <img src="{{url('image')}}/{{$item->avatar}}" width="120px" height="120px" class="img-circle" />
                                 <!--<a href="{{url('/')}}/changeavatar">Change avatar</a>!-->
                                 <div class="caption">
-                                    <h3>{{ucwords($item->name)}}</h3>
+                                    <h3 align="center">{{ucwords($item->name)}}</h3>
                                     <p align="center">
                                             {{$item->country}} - {{$item->city}}
                                     </p>
+                                    @if($item->user_id == Auth::user()->id)
                                     <p align="center"><a href="{{url('/editprofile')}}" class="btn btn-primary" role="button">Edit profile</a></p>
+                                    @endif
 
                                 </div>
                             </div>
@@ -36,7 +37,6 @@
                             <h4 class=""><span class="label label-default">About</span></h4>
                             <p>{{$item->about}}</p>
                         </div>
-
                     </div>
                 </div>
             </div>
