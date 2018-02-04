@@ -995,7 +995,7 @@ var app = new Vue({
 
     methods: {
         addPost: function addPost() {
-            axios.post('http://localhost:8000/post/store', {
+            axios.post('/post/store', {
                 content: this.content
             }).then(function (response) {
                 console.log(response);
