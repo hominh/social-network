@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')->get();
-        return view('welcome')
+        return view('welcome');
     }
 
     /**
@@ -38,7 +38,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd("aada");
+        $user_id = Auth::user()->id;
+        $content = $request->content;
+        $post = DB::table('posts')
+            ->insert(['content' => $content,'user_id' => $user_id,'status' => 0,'created_at' => date("Y-m-d H:i:s"),'updated_at' => date("Y-m-d H:i:s")]);
     }
 
     /**

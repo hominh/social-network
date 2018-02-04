@@ -16,5 +16,23 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        title: 'Update new posts'
+    },
+
+    methods: {
+      addPost() {
+        axios.post('http://localhost:8000/post/store',{
+            content: this.content
+        })
+        .then(function (response){
+            console.log(response);
+            alert('success');
+        })
+        .catch(function (error){
+            console.log(error);
+        })
+      }
+    }
 });

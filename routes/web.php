@@ -35,5 +35,6 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/friends','ProfileController@friends');
     Route::get('/notifications/{id}','ProfileController@notifications');
     Route::get('/unfriend/{id}','ProfileController@unfriend');
+    Route::post('/post/store',['as'=>'/post/store','uses'=>'PostController@store']);
 });
 Route::get('/posts','PostController@index');

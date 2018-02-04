@@ -54,7 +54,7 @@
                 <div class="col-md-6 col-sm-12 col-xs-12 center-con">
                     <div class="posts_div">
                         <div class="head_har">
-                            <i class="fa fa-edit"></i> @{{msg}}
+                            <i class="fa fa-edit"></i> @{{title}}
                         </div>
                         <div style="background-color:#fff; padding:10px">
                             <div class="row">
@@ -64,6 +64,7 @@
                                 <div class="col-md-11 col-sm-10 pull-right">
                                     <div v-if="!image">
                                         <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                                            {{ csrf_field() }}
                                             <textarea v-model="content" id="postText" class="form-control" placeholder="what's on your mind ?"></textarea>
                                             <button type="submit" class="btn btn-sm btn-primary pull-right" style="margin:10px; padding:5 15 5 15; background-color:#4267b2" id="postBtn">Post</button>
                                         </form>
@@ -192,7 +193,7 @@
         </div>
     </div>
 
-<script src="public/js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
 $(document).ready(function(){
 $('#postBtn').hide();
