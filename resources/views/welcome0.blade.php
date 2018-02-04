@@ -91,7 +91,7 @@
                 <div v-for="post,key in posts" >
                     <div class="col-md-12 all_posts">
                         <div class="col-md-1 pull-left">
-                            <img :src="'{{url('image')}}/' + post.user.avatar" style="width:50px; border-radius:100%">
+                            <img :src="'{{Config::get('app.url')}}/public/img/' + post.user.pic" style="width:50px; border-radius:100%">
                         </div>
                     <div class="col-md-10" style="margin-left:10px;">
                         <div class="row">
@@ -146,14 +146,14 @@
                     </p>
                     <div style="padding:10px; border-top:1px solid #ddd" class="col-md-12">
                         <div class="col-md-4">
-
-                            <p>
+                            <p v-if="post.likes.length>0">liked by <b style="color:green"> @{{post.likes.length}} </b> persons</p>
+                            <p v-else>
                                 <i class="fa fa-thumbs-up likeBtn" @click="likePost(post.id)">Like</i>
                             </p>
                         </div>
                         <div class="col-md-4">
                             <p @click="commentSeen= !commentSeen" class="commentHand">
-                              Comments <b></b>
+                              Comments <b>(@{{post.comments.length}})</b>
                             </p>
                         </div>
                       </div>
@@ -167,13 +167,13 @@
                         <ul v-for="comment in post.comments">
                             <li v-if="comment.user_id=={{Auth::user()->id}}">
                                 <a href="{{url('profile')}}">You</a>
-
+                                    @{{comment.comment}}
                             </li>
                             <li v-else>
                                 <a :href="'{{url('/profile')}}/' + post.user.slug">
                                     @{{post.user.name}}
                                 </a>
-
+                                @{{comment.comment}}
                             </li>
                         </ul>
                     </div>

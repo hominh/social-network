@@ -990,10 +990,28 @@ Vue.component('example', __webpack_require__(38));
 var app = new Vue({
     el: '#app',
     data: {
+        posts: [],
         title: 'Update new posts'
     },
+    created: function created() {
+        console.log('created');
+        //do something after creating vue instance
+        //this.fetchPosts();
+        this.fetchPosts();
+    },
+
 
     methods: {
+        fetchPosts: function fetchPosts() {
+            var _this = this;
+
+            axios.get('/post/lists').then(function (response) {
+                _this.posts = response.data;
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         addPost: function addPost() {
             axios.post('/post/store', {
                 content: this.content

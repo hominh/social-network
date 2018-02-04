@@ -18,12 +18,31 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app',
     data: {
+        posts: [],
         title: 'Update new posts'
+    },
+    created() {
+        console.log('created');
+      //do something after creating vue instance
+        //this.fetchPosts();
+        this.fetchPosts();
+
     },
 
     methods: {
-      addPost() {
-        axios.post('/post/store',{
+        fetchPosts() {
+            axios.get('/post/lists')
+            .then(response => {
+                this.posts = response.data;
+                console.log(response);
+
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        },
+        addPost() {
+            axios.post('/post/store',{
             content: this.content
         })
         .then(function (response){

@@ -16,8 +16,20 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->get();
-        return view('welcome');
+        /*$posts = DB::table('posts')
+            ->leftJoin('profiles','profiles.user_id','=','posts.user_id')
+            ->leftJoin('users','posts.user_id','=','users.id')
+            ->get();
+        return $posts;
+        //dd($posts);
+        //return view('welcome');*/
+        $posts = Post::with('user')
+                ->orderBy('created_at','DESC')
+                ->get();
+        //dd($posts);
+        //return view('welcome')
+        return $posts;
+
     }
 
     /**
