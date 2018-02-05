@@ -59,7 +59,7 @@
                         <div style="background-color:#fff; padding:10px">
                             <div class="row">
                                 <div class="col-md-1 col-md-2 pull-left">
-                                    <img src="{{Config::get('app.url')}}/public/img/{{Auth::user()->pic}}" style="width:50px; margin:5px;  border-radius:100%">
+                                    <img src="{{Config::get('app.url')}}:8000/image/{{Auth::user()->avatar}}" style="width:50px; margin:5px;  border-radius:100%">
                                 </div>
                                 <div class="col-md-11 col-sm-10 pull-right">
                                     <div v-if="!image">

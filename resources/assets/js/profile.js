@@ -18,21 +18,28 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        posts: [],
-        title: 'Update new posts'
+        title: 'Click on user from left side:',
+        content: '',
+        privatemessages:[],
+        singlemessages:[],
+        messagefrom:'',
+        conversation_id:'',
+        friend_id:'',
+        seen: false,
+        newmessagefrom:''
     },
     created() {
-        console.log('created');
+        console.log('createds');
       //do something after creating vue instance
-        this.fetchPosts();
+        this.fetchMessages();
 
     },
 
     methods: {
-        fetchPosts() {
-            axios.get('/post/lists')
+        fetchMessages() {
+            axios.get('/message/lists')
             .then(response => {
-                this.posts = response.data;
+                this.privatemessages = response.data;
                 console.log(response);
 
             })
@@ -40,7 +47,7 @@ const app = new Vue({
                 console.log(error);
             });
         },
-        addPost() {
+        addMessage() {
             axios.post('/post/store',{
             content: this.content
         })

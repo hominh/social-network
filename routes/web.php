@@ -37,6 +37,11 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/unfriend/{id}','ProfileController@unfriend');
     Route::post('/post/store',['as'=>'/post/store','uses'=>'PostController@store']);
     Route::get('/post/lists','PostController@index');
+    Route::get('/message/lists','MessageController@index');
+    Route::get('/message', function () {
+        return view('message.index');
+    });
     //Route::resource('post','PostController');
 });
 Route::get('/posts','PostController@index');
+Route::get('/messages','MessageController@index');

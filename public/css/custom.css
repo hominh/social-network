@@ -47,7 +47,7 @@ html, body {
 }
 .left-sidebar, .right-sidebar{
     background-color:#fff;
-    height:600px;
+    height:900px;
 }
 .posts_div{margin-bottom:10px !important;}
 .posts_div h3{
@@ -101,7 +101,7 @@ html, body {
     width:100%
 }
 .center-con{
-    max-height:600px;
+    /*max-height:600px;*/
     position: absolute;
     left:calc(25%);
     overflow-y: scroll;

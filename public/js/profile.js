@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -43091,15 +43091,17 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(41);
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43122,28 +43124,35 @@ Vue.component('example', __webpack_require__(36));
 var app = new Vue({
     el: '#app',
     data: {
-        posts: [],
-        title: 'Update new posts'
+        title: 'Click on user from left side:',
+        content: '',
+        privatemessages: [],
+        singlemessages: [],
+        messagefrom: '',
+        conversation_id: '',
+        friend_id: '',
+        seen: false,
+        newmessagefrom: ''
     },
     created: function created() {
-        console.log('created');
+        console.log('createds');
         //do something after creating vue instance
-        this.fetchPosts();
+        this.fetchMessages();
     },
 
 
     methods: {
-        fetchPosts: function fetchPosts() {
+        fetchMessages: function fetchMessages() {
             var _this = this;
 
-            axios.get('/post/lists').then(function (response) {
-                _this.posts = response.data;
+            axios.get('/message/lists').then(function (response) {
+                _this.privatemessages = response.data;
                 console.log(response);
             }).catch(function (error) {
                 console.log(error);
             });
         },
-        addPost: function addPost() {
+        addMessage: function addMessage() {
             axios.post('/post/store', {
                 content: this.content
             }).then(function (response) {
@@ -43160,12 +43169,6 @@ var app = new Vue({
         }
     }
 });
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
