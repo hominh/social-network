@@ -16,7 +16,13 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = DB::table('users')->where('id','!=',Auth::user()->id)->get();
+        $messages1 = DB::table('users')
+                    ->join('conversations','users.id','=','conversations.user_one')
+                    ->where('conversations.user_two','=',Auth::user()->id)->get();
+        $messages2 = DB::table('users')
+                    ->join('conversations','users.id','=','conversations.user_two')
+                    ->where('conversations.user_one','=',Auth::user()->id)->get();
+        $messages = array_merge($messages1->toArray(),$messages2->toArray());
         return $messages;
         //return view('message.index',compact('messages'));
     }
@@ -28,10 +34,11 @@ class MessageController extends Controller
      */
 
     public function getMessage($id) {
-        $user_id = Auth::user()->id;
-        $checkconversation = DB::table('conversation')
+        /*$user_id = Auth::user()->id;
+        $checkconversation = DB::table('conversations')
                             ->where('user_one','=',$user_id)
-                            ->where('user_one','=',$id)
+                            ->where('user_two','=',$id)
+                            ->orWhere('user_one','=',$user_id)
                             ->get();
         if(count($checkconversation) != 0) {
             $usermessage = DB::table('messages')
@@ -40,7 +47,12 @@ class MessageController extends Controller
         }
         else {
             echo "no message";
-        }
+        }*/
+        $messages = DB::table('messages')
+                ->join('users','messages.user_from','users.id')
+                ->where('messages.conversation_id','=',$id)
+                ->get();
+        return $messages;
     }
 
     public function create()
@@ -56,7 +68,28 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id = Auth::user()->id;
+        $conversation_id = $request->conversation_id;
+        $content = $request->content;
+        $checkconversation = DB::table('messages')->where('conversation_id',$conversation_id)->get();
+        if($checkconversation[0]->user_from == $user_id) {
+            $userto = $checkconversation[0]->user_to;
+        }
+        $message = DB::table('messages')->insert([
+            'user_to' => $userto,
+            'user_from' => $user_id,
+            'content' => $content,
+            'status' => 1,
+            'conversation_id' => $conversation_id
+        ]);
+        if($message) {
+            $messages = DB::table('messages')
+                    ->join('users','messages.user_from','users.id')
+                    ->where('messages.conversation_id','=',$conversation_id)
+                    ->get();
+
+            return $messages;
+        }
     }
 
     /**

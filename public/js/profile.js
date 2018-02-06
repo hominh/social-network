@@ -43152,20 +43152,39 @@ var app = new Vue({
                 console.log(error);
             });
         },
-        addMessage: function addMessage() {
-            axios.post('/post/store', {
-                content: this.content
-            }).then(function (response) {
-                console.log(response);
-                alert('success');
-                if (response.status == 200) {
-                    app.posts = response.data;
-                } else {
-                    console.log(response.status);
-                }
+
+        messages: function messages(id) {
+            axios.get('message/' + id).then(function (response) {
+                console.log(response.data);
+                app.singlemessages = response.data;
+                app.conversation_id = response.data[0].conversation_id;
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        inputHandler: function inputHandler(e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                this.sendMessage();
+            }
+        },
+        sendMessage: function sendMessage() {
+            if (this.messagefrom) {
+                axios.post('/message/store', {
+                    conversation_id: this.conversation_id,
+                    content: this.messagefrom
+
+                }).then(function (response) {
+                    console.log(response);
+                    alert('success');
+                    if (response.status == 200) {
+                        app.singlemessages = response.data;
+                    } else {
+                        console.log(response.status);
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
     }
 });

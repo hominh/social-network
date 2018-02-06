@@ -47,24 +47,44 @@ const app = new Vue({
                 console.log(error);
             });
         },
-        addMessage() {
-            axios.post('/post/store',{
-            content: this.content
-        })
-        .then(function (response){
-            console.log(response);
-            alert('success');
-            if(response.status == 200) {
-                app.posts = response.data;
+        messages: function(id) {
+            axios.get('message/'+id)
+            .then(response => {
+                console.log(response.data);
+                app.singlemessages = response.data;
+                app.conversation_id = response.data[0].conversation_id;
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        },
+        inputHandler(e) {
+            if(e.keyCode === 13 && !e.shiftKey) {
+                this.sendMessage();
+            }
+        },
+        sendMessage() {
+            if(this.messagefrom) {
+                axios.post('/message/store',{
+                    conversation_id: this.conversation_id,
+                    content: this.messagefrom,
 
+                })
+                .then(function (response){
+                    console.log(response);
+                    alert('success');
+                    if(response.status == 200) {
+                        app.singlemessages = response.data;
+
+                    }
+                    else {
+                        console.log(response.status);
+                    }
+                })
+                .catch(function (error){
+                    console.log(error);
+                })
             }
-            else {
-                console.log(response.status);
-            }
-        })
-        .catch(function (error){
-            console.log(error);
-        })
-      }
+        }
     }
 });

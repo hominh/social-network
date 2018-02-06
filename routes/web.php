@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/message', function () {
         return view('message.index');
     });
+    Route::post('/message/store',['as'=>'/message/store','uses'=>'MessageController@store']);
+    Route::get('/message/{id}','MessageController@getMessage');
     //Route::resource('post','PostController');
 });
 Route::get('/posts','PostController@index');
