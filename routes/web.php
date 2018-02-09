@@ -17,6 +17,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/forgetpassword',function(){
+    return view('profile.forgetpassword');
+});
+Route::get('/gettoken/{token}',function($token){
+    if(isset($token) && $token != '') {
+        $data = DB::table('password_resets')->where('token',$token)->get();
+        if(count($data) != 0) {
+            return view('profile.setpassword')->with('data',$data);
+        }
+        else {
+            echo "token is wrong";
+        }
+    }
+    else {
+        echo "token is wrong";
+    }
+});
+Route::get('setpass','ProfileController@setPass');
+Route::post('/settoken','ProfileController@setToken')->name('settoken');
 
 Route::group(['middleware' => 'auth'],function(){
     Route::get('/home', 'HomeController@index')->name('home');
@@ -43,6 +62,9 @@ Route::group(['middleware' => 'auth'],function(){
     });
     Route::post('/message/store',['as'=>'/message/store','uses'=>'MessageController@store']);
     Route::get('/message/{id}','MessageController@getMessage');
+
+    Route::get('/newmessage','MessageController@newMessage')->name('newnessage');
+    Route::post('/message/newmessage',['as'=>'//message/newmessage','uses'=>'MessageController@sendNewMessage']);
     //Route::resource('post','PostController');
 });
 Route::get('/posts','PostController@index');

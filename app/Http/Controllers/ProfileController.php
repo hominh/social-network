@@ -221,6 +221,7 @@ class ProfileController extends Controller
                 ->where('notifications.user_hero','=',$user_id)
                 ->orderBy('notifications.created_at', 'desc')
                 ->get();
+
         //dd($notes);
         return view('profile.notifications',compact('notes'));
     }
@@ -237,6 +238,43 @@ class ProfileController extends Controller
             ->delete();
         return back()->with('msg', 'You are not friend with this person');
 
+    }
+
+    public function setToken(Request $request) {
+        $email = $request->email;
+        $checkemail = DB::table('users')->where('email','=',$email)->get();
+        if(count($checkemail) == 0) {
+            echo "Wrong email address";
+        }
+        else {
+            $randomnumber = rand(1,999);
+            $token_sl = bcrypt($randomnumber);
+            $token = stripslashes($token_sl);
+            $inserttoken = DB::table('password_resets')->insert(['email'=>$email,'token'=>$token,'created_at'=>\Carbon\Carbon::now()->toDateTimeString()]);
+            $to = $email;
+            $baseUrl = 'http://localhost:8000/gettoken/'.$token;
+            $subject = "Password reset Link";
+            $message = "<a href='$baseUrl'>$token</a>";
+            // Always set content-type when sending HTML email
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            // More headers
+            $headers .= 'From: <admin@larabook.com>' . "\r\n";
+            mail($to,$subject,$message,$headers);
+        }
+    }
+
+    public function setPass(Request $request) {
+        $email = $request->email;
+        $password = $request->password;
+        $confirmpassword = $request->confrim_password;
+        if($password == $confirmpassword) {
+            DB::table('users')->where('email',$email)->update(['password' =>bcrypt($pass)]);
+            return back();
+        }
+        else {
+            echo "passwords not matched";
+        }
     }
 
 }

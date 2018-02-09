@@ -8,7 +8,7 @@
             <div class="col-md-4"> </div>
             <div class="col-md-6">Messenger</div>
             <div class="col-md-2 pull-right">
-                <a href="#"><img src="{{Config::get('app.url')}}:8000/image/compose.png" title="Send New Messages"></a></a>
+                <a href="{{url('/newmessage')}}"><img src="{{Config::get('app.url')}}:8000/image/compose.png" title="Send New Messages"></a></a>
             </div>
         </div>
         <div v-for="privsteMsg in privatemessages">

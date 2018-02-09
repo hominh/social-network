@@ -43185,6 +43185,22 @@ var app = new Vue({
                     console.log(error);
                 });
             }
+        },
+
+        friendId: function friendId(id) {
+            app.friend_id = id;
+        },
+        sendNewMsg: function sendNewMsg() {
+            console.log('new conversation');
+            axios.post('/message/newmessage', {
+                friend_id: this.friend_id,
+                content: this.newmessagefrom
+            }).then(function (response) {
+                console.log(response.data);
+                console.log('success');
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });
