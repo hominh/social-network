@@ -17,9 +17,9 @@ class DemoEmail extends Mailable
      * @return void
      */
 
-    public function __construct()
+    public function __construct($content)
     {
-        //$this->demo = $demo;
+        $this->content = $content;
     }
 
     /**
@@ -29,10 +29,7 @@ class DemoEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('profile.test')
-                    ->with([
-                        'orderName' => '121212',
-                        'orderPrice' => 'aaaaa',
-                    ]);
+        $subject = 'Reset password';
+        return $this->view('profile.test')->subject($subject)->with('content',$this->content);
     }
 }

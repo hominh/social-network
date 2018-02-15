@@ -263,12 +263,23 @@ class ProfileController extends Controller
             // More headers
             $headers .= 'From: <minhhh12@gmail.com>' . "\r\n";
             //mail($to,$subject,$message,$headers);
-            Mail::send('profile.test', ['title' => 'alo', 'content' => '1234'], function ($message)
+            /*Mail::send('profile.test', ['title' => 'Reset password','url' => $baseUrl, 'content' => 'This is a reset password email'], function ($message)
             {
                 $message->from('minhhh12@gmail.com', 'Ho Minh');
                 $message->to('hoilamgi85@gmail.com');
-            });
-            //Mail::to($to)->send(new DemoEmail());
+                echo "Happy new year";
+            });*/
+            $body = "Hi guy";
+            $body.= "<br />";
+            $body.= "Plese open ";
+            $body.= "<a href='".$baseUrl."'> link</a> ";
+            $body.= "to reset password ";
+            $content = [
+        		'title'=> 'Itsolutionstuff.com mail',
+        		'body'=> $body,
+        		'button' => 'Click Here'
+    		];
+            Mail::to($to)->send(new DemoEmail($content));
 
         }
     }
@@ -278,7 +289,7 @@ class ProfileController extends Controller
         $password = $request->password;
         $confirmpassword = $request->confrim_password;
         if($password == $confirmpassword) {
-            DB::table('users')->where('email',$email)->update(['password' =>bcrypt($pass)]);
+            DB::table('users')->where('email',$email)->update(['password' =>bcrypt($password)]);
             return back();
         }
         else {
