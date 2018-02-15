@@ -8,6 +8,8 @@ use DB;
 use App\Profile;
 use App\Friendship;
 use App\Notification;
+use App\Mail\DemoEmail;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller
 {
@@ -259,8 +261,15 @@ class ProfileController extends Controller
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
             // More headers
-            $headers .= 'From: <admin@larabook.com>' . "\r\n";
-            mail($to,$subject,$message,$headers);
+            $headers .= 'From: <minhhh12@gmail.com>' . "\r\n";
+            //mail($to,$subject,$message,$headers);
+            Mail::send('profile.test', ['title' => 'alo', 'content' => '1234'], function ($message)
+            {
+                $message->from('minhhh12@gmail.com', 'Ho Minh');
+                $message->to('hoilamgi85@gmail.com');
+            });
+            //Mail::to($to)->send(new DemoEmail());
+
         }
     }
 
